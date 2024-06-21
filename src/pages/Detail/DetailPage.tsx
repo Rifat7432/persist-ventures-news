@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { storFavoriteNewsData } from "../../redux/features/newsSlice";
 
 const DetailPage = () => {
-  const { newsData } = useAppSelector((state) => state.news);
+  const { newsData,favorite } = useAppSelector((state) => state.news);
+  const dispatch = useAppDispatch()
   const navigate = useNavigate();
+  // if no news Data
   if (!newsData) {
     return (
       <div>
@@ -21,6 +24,15 @@ const DetailPage = () => {
           <img src={newsData?.urlToImage} alt="article" />
         </figure>
         <div className="card-body">
+          <div className="rating flex justify-end">
+            <input
+              type="radio"
+              name="rating-4"
+              className="mask mask-star-2 bg-teal-300 checked:bg-teal-500"
+              checked={favorite.includes(newsData)}
+              onClick={()=>dispatch(storFavoriteNewsData(newsData))}
+            />
+          </div>
           <h2 className="card-title">{newsData?.title}</h2>
           <div>
             <p>{newsData?.description}</p>

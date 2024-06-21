@@ -4,11 +4,14 @@ import { useGetHeadlineQuery } from "../../../redux/services/API";
 
 const Carousel = () => {
   const query = useAppSelector((state) => state.news.querys.sources);
+  // get and set source
   const source = query ? query : "bbc-news";
+  // get headline acceding to source
   const { data,isLoading } = useGetHeadlineQuery({
-    apiKey: "32241a5e4d344043a43dbcfa8ad43711",
+    apiKey: import.meta.env.VITE_API_KEY,
     sources: source,
   });
+  //loading state
   if (isLoading) {
     return (
       <div className="w-10 mx-auto mt-52">
@@ -29,9 +32,9 @@ const Carousel = () => {
               >
                 <img
                   src={news.urlToImage}
-                  className="w-full rounded-lg h-[500px] mt-20"
+                  className="w-full rounded-lg sm:h-[500px] mt-20"
                 />
-                <div className="absolute top-96 left-10">
+                <div className="absolute top-2/3 left-10">
                   <h2 className="text-2xl font-bold text-[#313131]">
                     {news.title}
                   </h2>

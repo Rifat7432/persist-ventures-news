@@ -1,12 +1,11 @@
 //error type
 export type TErrorData = {
-  success: boolean;
-  massage: string;
-  errorMessage: string;
-  errorDetails: null;
-  stack: null;
+  status: string;
+  code: string;
+  message: string;
 };
-export type TArticle ={
+//news type
+export type TArticle = {
   source: TSource;
   author: string;
   title: string;
@@ -15,18 +14,19 @@ export type TArticle ={
   urlToImage: string;
   publishedAt: string;
   content: string;
-}
-
-export type TSource ={
+};
+// news of article source
+export type TSource = {
   id: string;
   name: string;
-}
+};
+// news source
 export interface ISource {
-  id: string
-  name: string
-  description: string
-  url: string
-  category: string
-  language: string
-  country: string
+  id: string;
+  name: string;
+  description: string;
+  url: string;
+  category: string;
+  language: string;
+  country: string;
 }

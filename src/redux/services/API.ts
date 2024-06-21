@@ -8,7 +8,7 @@ export const baseApi = createApi({
       "https://newsapi.org/v2",
   }),
   endpoints: (builder) => ({
-    // get Products api
+    // get headlines api
     getHeadline: builder.query({
       query: (filter) => ({
         url: "/top-headlines",
@@ -17,6 +17,7 @@ export const baseApi = createApi({
       }),
      
     }),
+    // get everything api
     getEverything: builder.query({
       query: (filter) => ({
         url: "/everything",
@@ -25,6 +26,7 @@ export const baseApi = createApi({
       }),
      
     }),
+    // get all sources api
     getSources: builder.query({
       query: (filter) => ({
         url: "/sources",

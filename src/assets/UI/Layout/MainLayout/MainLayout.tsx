@@ -3,6 +3,7 @@ import Navbar from "../../../Components/Navbar/Navbar";
 import Footer from "../../../Components/Footer/Footer";
 import { useAppSelector } from "../../../../redux/hooks/hooks";
 const MainLayout = () => {
+  // get theme
   const { theme } = useAppSelector((state) => state.news);
   return (
     <div data-theme={theme ? "light" : "dark"}>

@@ -9,16 +9,19 @@ const FilterNews = () => {
   const query = useAppSelector((state) => state.news.querys);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { sources, ...rest } = query;
+  // get  all sources
   const { data: allSources, isLoading } = useGetSourcesQuery({
-    apiKey: "32241a5e4d344043a43dbcfa8ad43711",
+    apiKey: import.meta.env.VITE_API_KEY,
     ...rest,
   });
+  // loading state
   if (isLoading) {
     return <div className="w-10 mx-auto mt-52"></div>;
   }
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
       <div className="sm:w-3/5 w-11/12 mx-auto mt-10 mb-10 max-w-[920px]">
+      {/* search input form */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -44,6 +47,7 @@ const FilterNews = () => {
         </form>
       </div>
       <div className="w-11/12 mx-auto grid grid-cols-1 lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      {/* Select Country */}
         <select
           onChange={(e) => dispatch(setQuery({ country: e.target.value }))}
           className="select select-info mx-auto w-full xl:w-48 lg:w-40 max-w-xs"
@@ -57,6 +61,7 @@ const FilterNews = () => {
             </option>
           ))}
         </select>
+        {/* Select category */}
         <select
           onChange={(e) => dispatch(setQuery({ category: e.target.value }))}
           className="select select-info mx-auto w-full xl:w-48 lg:w-40 max-w-xs"
@@ -70,6 +75,7 @@ const FilterNews = () => {
             </option>
           ))}
         </select>
+        {/* Select Language */}
         <select
           onChange={(e) => dispatch(setQuery({ language: e.target.value }))}
           className="select select-info mx-auto w-full xl:w-48 lg:w-40 max-w-xs"
@@ -83,6 +89,7 @@ const FilterNews = () => {
             </option>
           ))}
         </select>
+        {/* Select Chanel */}
         <select
           onChange={(e) => dispatch(setQuery({ sources: e.target.value }))}
           className="select select-info mx-auto w-full xl:w-48 lg:w-40 max-w-xs"
@@ -96,6 +103,7 @@ const FilterNews = () => {
             </option>
           ))}
         </select>
+        {/* Select News Type */}
         <select
           onChange={(e) => dispatch(setType(e.target.value))}
           className="select select-info mx-auto w-full xl:w-48 lg:w-40 max-w-xs"

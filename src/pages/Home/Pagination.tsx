@@ -4,12 +4,19 @@ import { arrayRange } from "../../utils/handelFilter";
 
 const Pagination = () => {
   const dispatch = useAppDispatch();
+  // get all current page and total articles
   const { totalResults, page } = useAppSelector((state) => state.news);
+  // creating an array of pages start 1 to last page
   const pageArray = arrayRange(1, Math.round(totalResults / 21), 1);
+  // last page
   const lastPage = pageArray[pageArray.length - 1];
-  const end = 7 + page >= lastPage ? lastPage - 1 : 7 + page;
-  const endMini = 1 + page >= lastPage ? lastPage - 1 : 1 + page;
+  // showing  first and last page in start and end but in middle i show 7 more page dynamically with an array of number
+  // start is the current page dynamically show 
   const start = page === 1 ? page : page - 1;
+  // end is the current page + 7 dynamically show 
+  const end = 7 + page >= lastPage ? lastPage - 1 : 7 + page;
+  // endMini is the current page + 2 dynamically show it is for lower then sm: in tailwind
+  const endMini = 1 + page >= lastPage ? lastPage - 1 : 1 + page;
   return (
     <>
       {pageArray.length && (
@@ -32,6 +39,7 @@ const Pagination = () => {
                 aria-label={`${1}`}
                 checked={1 === page}
               />
+            {/* show only sm: */}
               {pageArray
                 .slice(start + 8 >= lastPage ? end - 8 : start, end)
                 .map((num) => (
@@ -45,6 +53,7 @@ const Pagination = () => {
                     checked={num === page}
                   />
                 ))}
+                {/* show only lower then sm: */}
               {pageArray
                 .slice(start + 2 >= lastPage ? endMini - 2 : start, endMini)
                 .map((num) => (

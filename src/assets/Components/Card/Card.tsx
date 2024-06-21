@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { TArticle } from "../../../global/globalInterface";
 import { useAppDispatch } from "../../../redux/hooks/hooks";
 import { storANewsData } from "../../../redux/features/newsSlice";
-
+// article card
 const Card = ({ article }: { article: TArticle }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
@@ -16,7 +16,7 @@ const Card = ({ article }: { article: TArticle }) => {
           <div className="card-actions justify-start">
             <button onClick={()=>{
               dispatch(storANewsData(article))
-              navigate(`detail/${article?.title}`)
+              navigate(`/detail/${article?.title}`)
               }} className="btn btn-info">View Detail</button>
           </div>
         </div>

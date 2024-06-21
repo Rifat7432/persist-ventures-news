@@ -14,7 +14,8 @@ type TValue = {
   querys: TQuery;
   page: number;
   type: string;
-  theme:boolean;
+  theme: boolean;
+  favorite: TArticle[];
 };
 const initialState: TValue = {
   totalResults: 0,
@@ -23,7 +24,8 @@ const initialState: TValue = {
   querys: {},
   page: 1,
   type: "Headline",
-  theme:true
+  theme: true,
+  favorite: [],
 };
 // product slice
 export const newsSlice = createSlice({
@@ -32,6 +34,9 @@ export const newsSlice = createSlice({
   reducers: {
     storNewsData: (state, actions: PayloadAction<TArticle[]>) => {
       state.value = actions.payload;
+    },
+    storFavoriteNewsData: (state, actions: PayloadAction<TArticle>) => {
+      state.favorite.push(actions.payload);
     },
     storANewsData: (state, actions: PayloadAction<TArticle>) => {
       state.newsData = actions.payload;
@@ -76,6 +81,7 @@ export const {
   setTotalData,
   setPage,
   setType,
-  setTheme
+  setTheme,
+  storFavoriteNewsData
 } = newsSlice.actions;
 export default newsSlice.reducer;

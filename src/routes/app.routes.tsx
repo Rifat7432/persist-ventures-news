@@ -1,5 +1,6 @@
 import BlogPage from "../pages/Blog/BlogPage";
 import DetailPage from "../pages/Detail/DetailPage";
+import Favorite from "../pages/Favorite/Favorite";
 import HomePage from "../pages/Home/HomePage";
 
 // create route and nav items
@@ -22,5 +23,10 @@ export const appPaths = [
     name: "Blog",
     path: "blog",
     element: <BlogPage></BlogPage>,
+  },
+  {
+    name: "Favorite",
+    path: "favorite",
+    element: <Favorite></Favorite>,
   },
 ];
