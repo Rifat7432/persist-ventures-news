@@ -1,37 +1,22 @@
 import { TArticle } from "../../../global/globalInterface";
 import { useAppSelector } from "../../../redux/hooks/hooks";
-import { useGetHeadlineQuery } from "../../../redux/services/API";
 
 const Carousel = () => {
-  const query = useAppSelector((state) => state.news.querys.sources);
+  const { value } = useAppSelector((state) => state.news);
   // get and set source
-  const source = query ? query : "bbc-news";
-  // get headline acceding to source
-  const { data,isLoading } = useGetHeadlineQuery({
-    apiKey: import.meta.env.VITE_API_KEY,
-    sources: source,
-  });
-  //loading state
-  if (isLoading) {
-    return (
-      <div className="w-10 mx-auto mt-52">
-        <span className="loading loading-spinner loading-lg text-info"></span>
-      </div>
-    );
-  }
   return (
     <>
-      {data?.articles && (
+      {value && (
         <div>
           <div className="carousel w-full">
-            {data?.articles.map((news: TArticle) => (
+            {value.slice(0,10).map((news: TArticle) => (
               <div
-                key={news.urlToImage}
-                id={`item${data?.articles.indexOf(news) + 1}`}
+                key={news.image}
+                id={`item${value.indexOf(news) + 1}`}
                 className="carousel-item relative w-full"
               >
                 <img
-                  src={news.urlToImage}
+                  src={news.image}
                   className="w-full rounded-lg sm:h-[500px] mt-20"
                 />
                 <div className="absolute top-2/3 left-10">
@@ -46,12 +31,13 @@ const Carousel = () => {
             ))}
           </div>
           <div className="flex justify-center w-full py-2 gap-2">
-            {data?.articles.map((img: TArticle) => (
+            {value.slice(0,10).map((img: TArticle) => (
               <a
-                href={`#item${data?.articles.indexOf(img) + 1}`}
+                key={img.image}
+                href={`#item${value.indexOf(img) + 1}`}
                 className="btn btn-xs"
               >
-                {data?.articles.indexOf(img) + 1}
+                {value.indexOf(img) + 1}
               </a>
             ))}
           </div>

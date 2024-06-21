@@ -1,25 +1,23 @@
 //error type
 export type TErrorData = {
-  status: string;
-  code: string;
-  message: string;
+  errors:string[]
 };
 //news type
 export type TArticle = {
-  source: TSource;
-  author: string;
-  title: string;
-  description: string;
-  url: string;
-  urlToImage: string;
-  publishedAt: string;
-  content: string;
+  title: string
+  description: string
+  content: string
+  url: string
+  image: string
+  publishedAt: string
+  source: TSource
 };
 // news of article source
 export type TSource = {
-  id: string;
-  name: string;
+  name: string
+  url: string
 };
+
 // news source
 export interface ISource {
   id: string;

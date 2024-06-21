@@ -5,7 +5,7 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
     baseUrl:
-      "https://newsapi.org/v2",
+      "https://gnews.io/api/v4",
   }),
   endpoints: (builder) => ({
     // get headlines api
@@ -17,26 +17,10 @@ export const baseApi = createApi({
       }),
      
     }),
-    // get everything api
-    getEverything: builder.query({
-      query: (filter) => ({
-        url: "/everything",
-        method: "GET",
-        params: filter,
-      }),
-     
-    }),
-    // get all sources api
-    getSources: builder.query({
-      query: (filter) => ({
-        url: "/sources",
-        method: "GET",
-        params: filter,
-      }),
-     
-    }),
+    
+
     
   }),
 });
 
-export const { useGetHeadlineQuery,useGetEverythingQuery,useGetSourcesQuery } = baseApi;
+export const { useGetHeadlineQuery } = baseApi;

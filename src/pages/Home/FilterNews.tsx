@@ -1,27 +1,17 @@
 import { categories, countries, languages } from "../../global/globalConstant";
-import { ISource } from "../../global/globalInterface";
-import { setQuery, setType } from "../../redux/features/newsSlice";
+import { setQuery } from "../../redux/features/newsSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import { useGetSourcesQuery } from "../../redux/services/API";
 
 const FilterNews = () => {
   const dispatch = useAppDispatch();
   const query = useAppSelector((state) => state.news.querys);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { sources, ...rest } = query;
-  // get  all sources
-  const { data: allSources, isLoading } = useGetSourcesQuery({
-    apiKey: import.meta.env.VITE_API_KEY,
-    ...rest,
-  });
-  // loading state
-  if (isLoading) {
-    return <div className="w-10 mx-auto mt-52"></div>;
-  }
+
+  const { category: Category, country: Country, language: Language ,q} = query;
+
   return (
     <div className="max-w-7xl mx-auto">
       <div className="sm:w-3/5 w-11/12 mx-auto mt-10 mb-10 max-w-[920px]">
-      {/* search input form */}
+        {/* search input form */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -30,7 +20,7 @@ const FilterNews = () => {
           }}
         >
           <label className="input input-bordered input-info flex items-center gap-2">
-            <input name="q" type="text" className="grow" placeholder="Search" />
+            <input name="q" defaultValue={q} type="text" className="grow" placeholder="Search" />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -46,17 +36,21 @@ const FilterNews = () => {
           </label>
         </form>
       </div>
-      <div className="w-11/12 mx-auto grid grid-cols-1 lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      {/* Select Country */}
+      <div className="w-11/12 mx-auto grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {/* Select Country */}
         <select
           onChange={(e) => dispatch(setQuery({ country: e.target.value }))}
           className="select select-info mx-auto w-full xl:w-48 lg:w-40 max-w-xs"
         >
-          <option value={""} selected>
+          <option value={""} selected={Country ? "" === Country : true}>
             Select Country
           </option>
           {countries.map((country) => (
-            <option key={country.value} value={country.value}>
+            <option
+              selected={Country ? country.value === Country : false}
+              key={country.value}
+              value={country.value}
+            >
               {country.option}
             </option>
           ))}
@@ -66,11 +60,15 @@ const FilterNews = () => {
           onChange={(e) => dispatch(setQuery({ category: e.target.value }))}
           className="select select-info mx-auto w-full xl:w-48 lg:w-40 max-w-xs"
         >
-          <option value={""} selected>
+          <option value={""} selected={Category ? "" === Category : true}>
             Select category
           </option>
           {categories.map((category) => (
-            <option key={category.value} value={category.value}>
+            <option
+              selected={Category ? category.value === Category : false}
+              key={category.value}
+              value={category.value}
+            >
               {category.option}
             </option>
           ))}
@@ -80,39 +78,18 @@ const FilterNews = () => {
           onChange={(e) => dispatch(setQuery({ language: e.target.value }))}
           className="select select-info mx-auto w-full xl:w-48 lg:w-40 max-w-xs"
         >
-          <option value={""} selected>
+          <option value={""} selected={Language ? "" === Language : true}>
             Select Language
           </option>
           {languages.map((language) => (
-            <option key={language.value} value={language.value}>
+            <option
+              selected={Language ? language.value === Language : false}
+              key={language.value}
+              value={language.value}
+            >
               {language.option}
             </option>
           ))}
-        </select>
-        {/* Select Chanel */}
-        <select
-          onChange={(e) => dispatch(setQuery({ sources: e.target.value }))}
-          className="select select-info mx-auto w-full xl:w-48 lg:w-40 max-w-xs"
-        >
-          <option value={""} selected>
-            Select Chanel
-          </option>
-          {allSources?.sources.map((source: ISource) => (
-            <option key={source.id} value={source.id}>
-              {source.name}
-            </option>
-          ))}
-        </select>
-        {/* Select News Type */}
-        <select
-          onChange={(e) => dispatch(setType(e.target.value))}
-          className="select select-info mx-auto w-full xl:w-48 lg:w-40 max-w-xs"
-        >
-          <option value={"Headline"} selected disabled>
-            Select News Type
-          </option>
-          <option value={"Headline"}>Headline</option>
-          <option value={"Everything"}>Everything</option>
         </select>
       </div>
     </div>

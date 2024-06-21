@@ -9,7 +9,7 @@ const Card = ({ article }: { article: TArticle }) => {
   return (
       <div className="card w-full sm:w-96 md:w-80 lg:w-96 mx-auto bg-base-100 shadow-xl image-full">
         <figure>
-          <img src={article?.urlToImage} alt="article" />
+          <img src={article?.image} alt="article" />
         </figure>
         <div className="card-body">
           <h2 className="card-title">{article?.title}</h2>

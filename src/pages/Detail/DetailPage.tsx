@@ -21,7 +21,7 @@ const DetailPage = () => {
     <>
       <div className="card max-w-7xl w-11/12 mx-auto mt-20 lg:card-side bg-base-100 shadow-xl">
         <figure>
-          <img src={newsData?.urlToImage} alt="article" />
+          <img src={newsData?.image} alt="article" />
         </figure>
         <div className="card-body">
           <div className="rating flex justify-end">
@@ -40,7 +40,7 @@ const DetailPage = () => {
 
           <div className="md:flex w-full my-2">
             <p className="text-md font-semibold">
-              Publisher: {newsData?.author}
+              Publisher: {newsData?.source?.name}
             </p>
             <p className="text-md font-semibold">
               Published: {date.toLocaleDateString()}

@@ -4,7 +4,6 @@ import Carousel from "../../assets/Components/Carousel/Carousel";
 import { setTotalData, storNewsData } from "../../redux/features/newsSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import {
-  useGetEverythingQuery,
   useGetHeadlineQuery,
 } from "../../redux/services/API";
 import FilterNews from "./FilterNews";
@@ -19,16 +18,15 @@ const HomePage = () => {
     querys: query,
     value,
     page,
-    type,
   } = useAppSelector((state) => state.news);
   // query of headline
   const headlineQuery = {
-    sources: query.sources,
-    language: query.language ? query.language : "en",
+    lang: query.language ? query.language : "en",
     q: query.q,
-    category: query.sources ? undefined : query.category,
-    country: query.sources ? undefined : query.country,
+    category:  query.category,
+    country:query.country,
     page: page,
+    max: 12,
   };
   // get headline
   const {
@@ -36,45 +34,17 @@ const HomePage = () => {
     isLoading,
     error: getHeadlineError,
   } = useGetHeadlineQuery({
-    apiKey: import.meta.env.VITE_API_KEY,
+    apikey: import.meta.env.VITE_API_KEY,
     ...headlineQuery,
-    pageSize: 21,
+    
   });
-  // query of Everything or every news
-  const allNewsQuery = {
-    sources: query.sources ? query.sources : "bbc-news",
-    language: query.language ? query.language : "en",
-    q: query.q,
-    page: page,
-  };
-  // get Everything or every news
-  const { data: allNews, error: getEverythingError } = useGetEverythingQuery({
-    apiKey: import.meta.env.VITE_API_KEY,
-    ...allNewsQuery,
-    pageSize: 21,
-  });
+ 
+
   // showing errors by toast
   useEffect(() => {
-    if (value.length === 0) {
-      // get everything error
-      if (getEverythingError && type === "Everything") {
-        if ("status" in getEverythingError) {
-          //if user offline
-          if (typeof getEverythingError?.status === "string") {
-            toast.error(`soothing went wrong`);
-          }
-          // any api relate error
-          if (typeof getEverythingError?.status === "number") {
-            if ("data" in getEverythingError) {
-              const errorData: TErrorData =
-                getEverythingError.data as TErrorData;
-              toast.error(`${errorData.message.split(".")[0]}`);
-            }
-          }
-        }
-      }
+    if (!allHeadline ||value.length === 0) {
       // get headline error
-      if (getHeadlineError && type === "Headline") {
+      if (getHeadlineError) {
         if ("status" in getHeadlineError) {
           //if user offline
           if (typeof getHeadlineError?.status === "string") {
@@ -84,13 +54,13 @@ const HomePage = () => {
           if (typeof getHeadlineError?.status === "number") {
             if ("data" in getHeadlineError) {
               const errorData: TErrorData = getHeadlineError.data as TErrorData;
-              toast.error(`${errorData.message.split(".")[0]}`);
+              toast.error(`${errorData?.errors[0].split(".")[0]}`);
             }
           }
         }
       }
     }
-  }, [getHeadlineError, getEverythingError]);
+  }, [getHeadlineError]);
   // loading state
   if (isLoading) {
     return (
@@ -100,14 +70,9 @@ const HomePage = () => {
     );
   }
   // setting data if user want to see headline
-  if (allHeadline && type === "Headline") {
+  if (allHeadline) {
     dispatch(storNewsData(allHeadline.articles));
-    dispatch(setTotalData({ totalResults: allHeadline.totalResults }));
-  }
-  // setting data if user want to see everything or every news
-  if (allNews && type === "Everything") {
-    dispatch(storNewsData(allNews.articles));
-    dispatch(setTotalData({ totalResults: allNews.totalResults }));
+    dispatch(setTotalData({ totalResults: allHeadline.totalArticles }));
   }
   // if data don't set or get
   if (value.length === 0) {
