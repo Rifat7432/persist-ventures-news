@@ -13,6 +13,7 @@ type TValue = {
   newsData: TArticle | null;
   querys: TQuery;
   page: number;
+  favoritePage: number;
   type: string;
   theme: boolean;
   favorite: TArticle[];
@@ -23,6 +24,7 @@ const initialState: TValue = {
   newsData: null,
   querys: {},
   page: 1,
+  favoritePage: 1,
   type: "Headline",
   theme: true,
   favorite: [],
@@ -49,6 +51,9 @@ export const newsSlice = createSlice({
     },
     setPage: (state, actions: PayloadAction<{ page: number }>) => {
       state.page = actions.payload.page;
+    },
+    setFavoritePage: (state, actions: PayloadAction<{ favoritePage: number }>) => {
+      state.favoritePage = actions.payload.favoritePage;
     },
     setType: (state, actions: PayloadAction<string>) => {
       state.type = actions.payload;
@@ -82,6 +87,7 @@ export const {
   setPage,
   setType,
   setTheme,
-  storFavoriteNewsData
+  storFavoriteNewsData,
+  setFavoritePage,
 } = newsSlice.actions;
 export default newsSlice.reducer;

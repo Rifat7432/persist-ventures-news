@@ -1,5 +1,6 @@
 import Card from "../../assets/Components/Card/Card";
 import { useAppSelector } from "../../redux/hooks/hooks";
+import FavoritePagination from "./FavoritePagination";
 
 const Favorite = () => {
   const { favorite } = useAppSelector((state) => state.news);
@@ -19,6 +20,8 @@ const Favorite = () => {
         {favorite.map((news) => (
           <Card article={news}></Card>
         ))}
+        {/* // Pagination  component */}
+        <FavoritePagination></FavoritePagination>
       </div>
     </div>
   );

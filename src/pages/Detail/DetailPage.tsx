@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { storFavoriteNewsData } from "../../redux/features/newsSlice";
 
 const DetailPage = () => {
-  const { newsData,favorite } = useAppSelector((state) => state.news);
-  const dispatch = useAppDispatch()
+  const { newsData, favorite } = useAppSelector((state) => state.news);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   // if no news Data
   if (!newsData) {
@@ -25,13 +25,16 @@ const DetailPage = () => {
         </figure>
         <div className="card-body">
           <div className="rating flex justify-end">
-            <input
-              type="radio"
-              name="rating-4"
-              className="mask mask-star-2 bg-teal-300 checked:bg-teal-500"
-              checked={favorite.includes(newsData)}
-              onClick={()=>dispatch(storFavoriteNewsData(newsData))}
-            />
+            <div className="tooltip" data-tip="Add Favorite List">
+              {" "}
+              <input
+                type="radio"
+                name="rating-4"
+                className="mask mask-star-2 bg-teal-300 checked:bg-teal-500"
+                checked={favorite.includes(newsData)}
+                onClick={() => dispatch(storFavoriteNewsData(newsData))}
+              />
+            </div>
           </div>
           <h2 className="card-title">{newsData?.title}</h2>
           <div>

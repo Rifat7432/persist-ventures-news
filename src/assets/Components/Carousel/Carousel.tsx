@@ -19,7 +19,7 @@ const Carousel = () => {
                   src={news.image}
                   className="w-full rounded-lg sm:h-[500px] mt-20"
                 />
-                <div className="absolute top-2/3 left-10">
+                <div className="absolute top-1/3 sm:top-2/3 left-10">
                   <h2 className="text-2xl font-bold text-[#313131]">
                     {news.title}
                   </h2>
